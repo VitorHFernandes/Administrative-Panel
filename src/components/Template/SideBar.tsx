@@ -7,7 +7,7 @@ export const SideBar = () => {
       <ul>
         <MenuItem url="/" text="Start" icon={ IconHome } />
         <MenuItem url="/adjustments" text="Adjustments" icon={ IconAdjustments } />
-        <MenuItem url="/notify" text="Notify" icon={ IconBell } />
+        <MenuItem url="/notifications" text="Notifications" icon={ IconBell } />
       </ul>
     </aside>
   )
