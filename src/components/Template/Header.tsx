@@ -1,5 +1,3 @@
-'use client'
-
 import { Title } from './Title'
 
 interface iHeader {

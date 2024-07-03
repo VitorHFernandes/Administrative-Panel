@@ -1,7 +1,3 @@
-'use client'
-
-import { SideBar } from './SideBar'
-
 interface iTitle {
   title: string,
   subtitle: string,
