@@ -5,11 +5,11 @@ import useAppData from '@/data/hook/UseAppData';
 
 export default function Notifications() {
 
-  const data = useAppData()
+  const { alterTheme } = useAppData()
 
   return (
     <Layout title='Notifications page' subtitle='Manage your notifications.'>
-      <h3>{data.name}</h3>
+      <button onClick={alterTheme}>Alter theme</button>
     </Layout>
   );
 }

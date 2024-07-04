@@ -1,24 +1,32 @@
 "use client"
-import { createContext } from "react";
+import { createContext, useState } from "react";
+
+type tTheme = 'dark' | ''
 
 interface iAppProvider {
   children: React.ReactNode
 }
 
 interface iAppContext {
-  name: string | null
+  theme?: tTheme,
+  alterTheme?: () => void
 }
 
 const defaultContextValue: iAppContext = {
-  name: null
+  theme: ''
 }
 
 const AppContext= createContext<iAppContext>(defaultContextValue)
 
 export function AppProvider({ children }: iAppProvider){
+  const [theme, setTheme] = useState<tTheme>('dark')
+
+  const alterTheme = () => setTheme(theme === '' ? 'dark' : '')
+
   return (
     <AppContext.Provider value={{
-      name: 'Teste Context API'
+      theme,
+      alterTheme
     }}>
       { children }
     </AppContext.Provider>
