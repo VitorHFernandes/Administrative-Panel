@@ -1,14 +1,21 @@
 'use client'
 
 import AuthInput from "@/components/Auth/AuthInput"
+import { IconWarn } from "@/components/Icons"
 import { useState } from "react"
 
 const Auth = () => {
-  const [mode, setMode] = useState<'login' | 'sign up'>('login')
+  const [mode, setMode]   = useState<'login' | 'sign up'>('login')
+  const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
-  const [pass, setPass] = useState('')
+  const [pass, setPass]   = useState('')
 
-  const submit = () => mode === 'login' ? console.log('login') : console.log('register')
+  const submit = () => mode === 'login' ? console.error('Login error') : console.error('Register error')
+
+  const showError = (message: any, timeInSeconds: number = 5) => {
+    setError(message)
+    setTimeout(() => setError(null), timeInSeconds * 1000)
+  }
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -24,6 +31,16 @@ const Auth = () => {
         <h1 className={`text-xl font-bold mb-5`}>
           {mode === 'login' ? 'Sign in to your account' : 'Create your account'}
         </h1>
+        {error ? (
+        <div className={`
+            flex items-center
+            bg-red-400 text-white py-3 px-5 my-2
+            border border-red-700 rounded-lg
+          `}>
+            {IconWarn()}
+            <span className="ml-3">{ error }</span>
+        </div>
+        ) : false}
         <AuthInput 
           label="E-mail"
           value={email}
