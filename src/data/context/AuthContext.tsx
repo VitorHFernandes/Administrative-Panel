@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }: tAuthProvider) => {
     )
     if(resp.user?.email){
       const user = await normalUser(resp.user)
+      setUser(user)
       Router.push('/')
     }
   }

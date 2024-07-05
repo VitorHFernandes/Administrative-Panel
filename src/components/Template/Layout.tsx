@@ -1,6 +1,6 @@
 'use client'
 
-import useAppData from '@/data/hook/UseAppData'
+import useAppData from '@/data/hook/useAppData'
 import { Content } from './Content'
 import { Header } from './Header'
 import { SideBar } from './SideBar'

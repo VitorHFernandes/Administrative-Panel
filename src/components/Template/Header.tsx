@@ -1,6 +1,6 @@
 import { Title } from './Title'
 import { AlterThemeButton } from './AlterThemeButton'
-import useAppData from '@/data/hook/UseAppData'
+import useAppData from '@/data/hook/useAppData'
 
 interface iHeader {
   title: string,
