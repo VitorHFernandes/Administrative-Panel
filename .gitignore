@@ -27,7 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
-next.config.mjs
+
 
 # vercel
 .vercel
@@ -35,3 +35,6 @@ next.config.mjs
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#nextconfig
+next.config.mjs
