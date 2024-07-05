@@ -12,7 +12,7 @@ interface iAuthContext {
 
 type tAuthProvider = {
   children: React.ReactNode
-} 
+}
 
 const AuthContext = createContext<iAuthContext>({})
 
