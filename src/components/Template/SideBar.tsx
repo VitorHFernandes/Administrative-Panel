@@ -1,8 +1,11 @@
 import { IconHome, IconAdjustments, IconBell, IconExit } from "@/components/Icons"
 import { MenuItem } from "./MenuItem"
 import { Logo } from "./Logo"
+import useAuth from "@/data/hook/useAuth"
 
 export const SideBar = () => {
+  const { logOut } = useAuth()
+
   return (
     <aside className={`
       flex flex-col 
@@ -23,7 +26,7 @@ export const SideBar = () => {
       </ul>
       <ul>
         <MenuItem 
-          onClick={() => console.log('logout')}
+          onClick={logOut}
           text="Exit" icon={ IconExit }
           className={`
             text-red-600 dark:text-red-400 
