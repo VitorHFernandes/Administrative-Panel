@@ -1,13 +1,14 @@
 'use client'
 
 import { createContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 import firebase from '@/firebase/config'
 import Cookies from 'js-cookie'
 import User from "@/model/User";
 
 interface iAuthContext {
   user?: User | null | undefined,
+  loading?: boolean,
   googleLogin?: () => Promise<void>
   logOut?: () => Promise<void>
 }
@@ -18,8 +19,10 @@ type tAuthProvider = {
 
 const AuthContext = createContext<iAuthContext>({})
 
+
 const normalUser = async (firebaseUser: firebase.User): Promise<User> => {
   const token = await firebaseUser.getIdToken()
+
 
   return {
     uid: firebaseUser.uid,
@@ -63,13 +66,14 @@ export const AuthProvider = ({ children }: tAuthProvider) => {
   const Router = useRouter()
 
   const googleLogin = async () => {
+
     try {
       setLoading(true)
       const resp = await firebase.auth().signInWithPopup(
         new firebase.auth.GoogleAuthProvider()
       )
       settingsSessions(resp.user)
-      Router.push('/')
+      Router.push("/")
     } finally {
       setLoading(true)
     }
@@ -89,12 +93,15 @@ export const AuthProvider = ({ children }: tAuthProvider) => {
     if(Cookies.get('admin-panel-auth')) {
       const cancel = firebase.auth().onIdTokenChanged(settingsSessions)
       return () => cancel()
+    } else {
+      setLoading(false)
     }
   }, [])
 
   return (
     <AuthContext.Provider value={{
       user,
+      loading,
       googleLogin,
       logOut
     }}>
