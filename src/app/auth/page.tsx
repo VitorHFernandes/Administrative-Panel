@@ -1,33 +1,58 @@
 'use client'
 
-import AuthInput from "@/components/Auth/AuthInput"
-import { IconWarn } from "@/components/Icons"
-import useAuth from "@/data/hook/useAuth"
 import { useState } from "react"
+import { IconWarn } from "@/components/Icons"
+import AuthInput from "@/components/Auth/AuthInput"
+import useAuth from "@/data/hook/useAuth"
+import Image from "next/image"
+
 
 const Auth = () => {
-  const { user, googleLogin } = useAuth()
+  const { Login, SignUp, googleLogin } = useAuth()
 
   const [mode, setMode]   = useState<'login' | 'sign up'>('login')
   const [error, setError] = useState(null)
   const [email, setEmail] = useState('')
-  const [pass, setPass]   = useState('')
-
-  const submit = () => mode === 'login' ? console.error('Login error') : console.error('Register error')
+  const [password, setPass]   = useState('')
 
   const showError = (message: any, timeInSeconds: number = 5) => {
     setError(message)
     setTimeout(() => setError(null), timeInSeconds * 1000)
   }
 
+    const submit = async () => {
+    try {
+      if (mode === 'login') {
+        if(Login) {
+          await Login(email, password)
+        } else {
+          showError('Login is not defined! Contact your administrator.')
+        }
+      } else {
+        if(SignUp) {
+          await SignUp(email, password)
+        } else {
+          showError('SignUp is not defined! Contact your administrator.')
+        }
+      }
+    } catch(e) {
+      showError((e as Error).message ?? 'Unknown error!')
+    }
+  }
+
+
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="hidden md:block md:w-1/2 lg:w-2/3">
-        <img 
-          src="https://images.unsplash.com/photo-1717330551200-83da9ed42835?h=2154.857142857143&w=1200&auto=format&fit=crop&q=60&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzIwMDYyMDI0fA&ixlib=rb-4.0.3"
-          alt="Authentication screen image"
-          className="h-screen w-full object-cover"
-        />
+      <Image
+        src="https://images.unsplash.com/photo-1717330551200-83da9ed42835?h=2154.857142857143&w=1200&auto=format&fit=crop&q=60&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzIwMDYyMDI0fA&ixlib=rb-4.0.3"
+        alt="Authentication screen image"
+        width={1000}
+        height={7000}
+        quality={100}
+        priority={true}
+        className="h-screen w-full object-cover"
+      />
           
       </div>
       <div className="m-10 w-full md:w-1/2 lg:w-1/3">
@@ -53,7 +78,7 @@ const Auth = () => {
         />
         <AuthInput 
           label="Password"
-          value={pass}
+          value={password}
           changeValue={setPass}
           type="password"
           required
@@ -62,7 +87,7 @@ const Auth = () => {
         <button 
           onClick={submit}
           className={`w-full bg-indigo-500 hover:bg-indigo-400 text-white rounded-lg px-4 py-3 mt-6`}>
-          {mode === 'login' ? 'Login' : 'Register'}
+          {mode === 'login' ? 'Login' : 'SignUp'}
         </button>
         <hr className="my-6 border-gray-300 w-full" />
         <button 

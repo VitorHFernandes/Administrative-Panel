@@ -10,6 +10,8 @@ interface iAuthContext {
   user?: User | null | undefined,
   loading?: boolean,
   googleLogin?: () => Promise<void>
+  Login?: (email: string, password: string) => Promise<void>
+  SignUp?: (email: string, password: string) => Promise<void>
   logOut?: () => Promise<void>
 }
 
@@ -45,7 +47,7 @@ const managementCookie = (logged: boolean) => {
 }
 
 export const AuthProvider = ({ children }: tAuthProvider) => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<User | null>(null)
 
   const settingsSessions = async (firebaseUser: any) => {
@@ -66,13 +68,34 @@ export const AuthProvider = ({ children }: tAuthProvider) => {
   const Router = useRouter()
 
   const googleLogin = async () => {
-
     try {
       setLoading(true)
       const resp = await firebase.auth().signInWithPopup(
         new firebase.auth.GoogleAuthProvider()
       )
-      settingsSessions(resp.user)
+      await settingsSessions(resp.user)
+      Router.push("/")
+    } finally {
+      setLoading(true)
+    }
+  }
+
+  const Login = async (email: string, password: string) => {
+    try {
+      setLoading(true)
+      const resp = await firebase.auth().signInWithEmailAndPassword(email, password)
+      await settingsSessions(resp.user)
+      Router.push("/")
+    } finally {
+      setLoading(true)
+    }
+  }
+
+  const SignUp = async ( email: string, password: string) => {
+    try {
+      setLoading(true)
+      const resp = await firebase.auth().createUserWithEmailAndPassword(email, password)
+      await settingsSessions(resp.user)
       Router.push("/")
     } finally {
       setLoading(true)
@@ -103,6 +126,8 @@ export const AuthProvider = ({ children }: tAuthProvider) => {
       user,
       loading,
       googleLogin,
+      Login,
+      SignUp,
       logOut
     }}>
       { children }

@@ -1,4 +1,6 @@
-import router from "next/router"
+/* eslint-disable react-hooks/rules-of-hooks */
+"use client"
+import { useRouter } from "next/navigation"
 import Loading from "/public/images/loading.gif"
 import useAuth from "@/data/hook/useAuth"
 import Image from "next/image"
@@ -6,8 +8,8 @@ import Head from "next/head"
 
 const forceAuth = (jsx: React.ReactNode) => {
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { user, loading } = useAuth()
+  const router = useRouter()
 
   const renderContent = () => {
     return (

@@ -5,7 +5,7 @@ import { Content } from './Content'
 import { Header } from './Header'
 import { SideBar } from './SideBar'
 //import ForceAuth from '../Auth/ForceAuth'
-import ForceAuth from '@/functions/ForceAuth'
+import ForceAuth from '@/functions/forceAuth'
 
 interface iLayout {
   title: string,
