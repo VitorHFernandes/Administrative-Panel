@@ -1,14 +1,13 @@
 "use client"
 import { createContext, useState } from "react";
-
-type tTheme = 'dark' | ''
+import { useEffect } from "react";
 
 interface iAppProvider {
   children: React.ReactNode
 }
 
 interface iAppContext {
-  theme?: tTheme,
+  theme?: string,
   alterTheme?: () => void
 }
 
@@ -19,10 +18,19 @@ const defaultContextValue: iAppContext = {
 const AppContext= createContext<iAppContext>(defaultContextValue)
 
 export function AppProvider({ children }: iAppProvider){
-  const [theme, setTheme] = useState<tTheme>('dark')
+  const [theme, setTheme] = useState('dark')
 
-  const alterTheme = () => setTheme(theme === '' ? 'dark' : '')
+  const alterTheme = () => {
+    const newTheme = theme === '' ? 'dark' : ''
+    setTheme(newTheme)
+    localStorage.setItem("theme", newTheme)
+  }
 
+  useEffect(() => {
+    const savedTheme: string | null = localStorage.getItem('theme')
+    setTheme(savedTheme ?? '')
+  }, [])
+  
   return (
     <AppContext.Provider value={{
       theme,

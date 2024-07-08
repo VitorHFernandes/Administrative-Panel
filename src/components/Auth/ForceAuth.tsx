@@ -16,17 +16,17 @@ const ForceAuth = ({ children }: tForceAuth) => {
   const renderContent = () => {
     return (
       <>
-      <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if(!document.cookie?.includes("admin-panel-auth")){
-                window.location.href = "/auth"
-              }
-            `
-          }}
-        />
-      </Head>
+        <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if(!document.cookie?.includes("admin-panel-auth")){
+                  window.location.href = "/auth"
+                }
+              `
+            }}
+          />
+        </Head>
         {children}
       </>
     )
